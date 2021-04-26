@@ -125,6 +125,8 @@ RUN cd mrtrix3 && git fetch --tags && git checkout tags/3.0.1 && ./configure -no
 ## manually add to path
 ENV PATH=$PATH:/flywheel/v0//mrtrix3/bin
 
+## Add a line for configuration
+RUN echo ScriptScratchDir: /flywheel/v0/output/tmp/ > /etc/mrtrix.conf
 
 #https://wiki.ubuntu.com/DashAsBinSh
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
