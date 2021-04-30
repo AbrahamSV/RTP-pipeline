@@ -155,7 +155,7 @@ else
   # Clean the folders so that they dont go to FW results
   rm -rf $OUTPUT_DIR/$RTP_NAME
   rm -rf $OUTPUT_DIR/tmp
-  rm -rf $OUTPUT_DIR/$MCR_CACHE_FOLDER_NAME
+  rm -rf $MCR_CACHE_FOLDER_NAME
 
   # Set permissions for outputs (prevent root only r/w)
   chmod -R 777 $OUTPUT_DIR
