@@ -1,13 +1,13 @@
 {
     "config": {
-        "basedir": "/export/home/llecca/public/Gari/SLF123",
-        "codedir":"/export/home/llecca/public/Gari/SLF123/codes",	
-        "MNIpackage": "MNI_JHU_tracts_ROIs_transformed2MNI152_withPeds",
+        "basedir": "/scratch/glerma/DATA/MINI/Nifti/derivatives/rtp-pipeline_4.3.9/analysis-01/",
+        "codedir":"/dipc/glerma/soft/RTP-pipeline/scripts/SLF123",	
+        "MNIpackage": "none",
         "MNItemplate":"FSL_MNI152_FreeSurferConformed_1mm",
-        "logdir":"/export/home/llecca/llecca/logs/SLF123",
-        "host":"BCBL",
+        "logdir":"/scratch/glerma/logs",
+        "host":"DIPCedr",
         "qsub":"true",
-        "script":"registration.sh"	
+        "script":"transform.sh"	
     },
     "BCBL": {
         "mem":"60G",
@@ -18,8 +18,17 @@
 	"gcc_ver":"gcc/7.3.0",
 	"core":6
     },
-    "DIPC": {
-	"mem":"100G",
+    "DIPCfdr": {
+	"mem":"60G",
+	"que":"bcbl",
+	"ants_ver":"ANTs/2.3.5-foss-2019b-Python-3.7.4",
+	"fsl_ver":"FSL/6.0.0-foss-2018b",
+	"mrtrix_ver":"MRtrix/3.0.0-foss-2020a-Python-3.8.2",
+	"gcc_ver":"GCC/9.3.0",
+	"core":6
+    },
+    "DIPCedr": {
+	"mem":"60G",
 	"que":"bcbl",
 	"ants_ver":"ANTs/2.3.5-foss-2019b-Python-3.7.4",
 	"fsl_ver":"FSL/6.0.0-foss-2018b",

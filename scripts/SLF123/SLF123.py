@@ -42,14 +42,22 @@ if host == "BCBL":
     fsl_ver=vars["BCBL"]["fsl_ver"]
     gcc_ver=vars["BCBL"]["gcc_ver"]
     mrtrix_ver=vars["BCBL"]["mrtrix_ver"]
-elif host == "DIPC":
-    mem=vars["DIPC"]["mem"]
-    que=vars["DIPC"]["que"]
-    core=vars["DIPC"]["core"]
-    ants_ver=vars["DIPC"]["ants_ver"]
-    fsl_ver=vars["DIPC"]["fsl_ver"]
-    gcc_ver=vars["DIPC"]["gcc_ver"]
-    mrtrix_ver=vars["DIPC"]["mrtrix_ver"]
+elif host == "DIPCfdr":
+    mem=vars["DIPCfdr"]["mem"]
+    que=vars["DIPCfdr"]["que"]
+    core=vars["DIPCfdr"]["core"]
+    ants_ver=vars["DIPCfdr"]["ants_ver"]
+    fsl_ver=vars["DIPCfdr"]["fsl_ver"]
+    gcc_ver=vars["DIPCfdr"]["gcc_ver"]
+elif host == "DIPCedr":
+    mem=vars["DIPCedr"]["mem"]
+    que=vars["DIPCedr"]["que"]
+    core=vars["DIPCedr"]["core"]
+    ants_ver=vars["DIPCedr"]["ants_ver"]
+    fsl_ver=vars["DIPCedr"]["fsl_ver"]
+    gcc_ver=vars["DIPCedr"]["gcc_ver"]
+    mrtrix_ver=vars["DIPCedr"]["mrtrix_ver"]
+    mrtrix_ver=vars["DIPCedr"]["mrtrix_ver"]
     
 os.chdir(codedir)
 

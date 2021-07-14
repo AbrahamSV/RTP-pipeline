@@ -14,15 +14,15 @@ printf "#### transform2: $transform2 \n"
 printf "#### BASEDIR: $BASEDIR \n"
 
 for ROI in $(cat $BASEDIR/roisList.txt);do
-
-printf "Transforming $ROI \n"
-
-antsApplyTransforms -d 3 \
--i $roidir/$ROI.nii.gz \
--r $ref \
--n linear \
--t $transform1 \
--t $transform2 \
--o $roidir/$ROI-MNISegment-linear.nii.gz
-
+    printf "Transforming ${ROI}.nii.gz to ${ROI}_MNI.nii.gz\n"
+    if [[ ! -d $roidir/MNIspace ]]; then
+        mkdir $roidir/MNIspace
+    fi
+    antsApplyTransforms -d 3 \
+        -i $roidir/$ROI.nii.gz \
+        -r $ref \
+        -n linear \
+        -t $transform1 \
+        -t $transform2 \
+        -o $roidir/MNIspace/${ROI}_MNI.nii.gz
 done
