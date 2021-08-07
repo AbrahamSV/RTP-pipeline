@@ -9,8 +9,13 @@ function RTP(jsonargs)
 %       params:     Key-Value pair of params for RTP_Create
 %{
 % EXAMPLE USAGE:
-    jsonargs = "/bcbl/home/home_g-m/llecca/llecca/RTP-pipeline/afq/source/pruebas.json";
+    jsonargs = "/bcbl/home/home_g-m/glerma/GIT/RTP-pipeline/afq/source/pruebas.json";
+   
+ 
+    jsonargs = "/export/home/glerma/TESTDATA/DWIpipeline/Nifti/derivatives/rtp-pipeline_4.3.9/analysis-01/output_parsed.json";
     RTP(jsonargs);
+
+
 %}
 %
 %#ok<*AGROW>
@@ -370,33 +375,93 @@ checkTheseRois = [strcat(A.roi1,A.extroi1);strcat(A.roi2,A.extroi2);strcat(A.roi
                   strcat(A.roi4,A.extroi4);strcat(A.roi5,A.extroi5);strcat(A.roi6,A.extroi6)];
 % If there is an AND, this means that there are two ROIs
 % Create a new list with the individual ROIs to create, after checking the individuals are there
-createROInew = [];
-createROI1   = [];
-createROI2   = [];
+createROInew  = [];
+createROI1    = [];
+createROI2    = [];
+emptyOrNoROIs = [];
 for nc=1:length(checkTheseRois)
 	rname = checkTheseRois(nc);
 	if strcmp(rname,"NO.nii.gz")
 		% do nothing
 	elseif contains(rname,'_AND_')
-		% Add the ROI to be created
-		createROInew = [createROInew; rname];
 		% Check if the individuals exist
 		rois12 = strsplit(rname,'_AND_');
 
 		% ROI1
 		rpath  = fullfile(J.params.roi_dir,strcat(rois12{1},".nii.gz"));
-		if ~isfile(rpath);error('ROI %s is required and it is not in the ROIs folder',rpath);end
-		createROI1 = [createROI1; strcat(rois12{1},".nii.gz")];
+		if ~isfile(rpath)
+            warning('ROI %s is required and it is not in the ROIs folder, the lines containing this ROI will be removed',rpath);
+            emptyOrNoROIs = [emptyOrNoROIs; rois12{1}];
+        else
+            % Check if the roi is not empty, if it is empty, remove the tract as well
+            tmproi = niftiread(rpath);
+            if sum(tmproi(:))==0
+                warning('ROI %s is required, exists, but it is empty, the lines containing this ROI will be removed',rpath);
+                emptyOrNoROIs = [emptyOrNoROIs; rois12{1}];
+            else
+                createROI1 = [createROI1; strcat(rois12{1},".nii.gz")];
+                
+                % Now check the second, both need to exist and be non empty
+                % ROI2
+                rpath  = fullfile(J.params.roi_dir,rois12{2});
+                if ~isfile(rpath)
+                    warning('ROI %s is required and it is not in the ROIs folder, the lines containing this ROI will be removed',rpath);
+                    emptyOrNoROIs = [emptyOrNoROIs; rois12{2}];
+                else
+                    % Check if the roi is not empty, if it is empty, remove the tract as well
+                    tmproi = niftiread(rpath);
+                    if sum(tmproi(:))==0
+                        warning('ROI %s is required, exists, but it is empty, the lines containing this ROI will be removed',rpath);
+                        emptyOrNoROIs = [emptyOrNoROIs; rois12{2}];
+                    else
+                        createROI2 = [createROI2; string(rois12{2})];
+                        % Add the ROI to be created
+                        createROInew = [createROInew; rname];
+                    end
+                end
+           end
+       end
+		
 
-		% ROI2
-		rpath  = fullfile(J.params.roi_dir,rois12{2});
-		if ~isfile(rpath);error('ROI %s is required and it is not in the ROIs folder',rpath);end
-		createROI2 = [createROI2; string(rois12{2})];
-	else
+		
+    else  % Normal check
 		rpath  = fullfile(J.params.roi_dir,rname);
-		if ~isfile(rpath);error('ROI %s is required and it is not in the ROIs folder',rpath);end
+		if ~isfile(rpath)
+            warning('ROI %s is required and it is not in the ROIs folder, the lines containing this ROI will be removed',rpath);
+            emptyOrNoROIs = [emptyOrNoROIs; rname];
+        else
+            % Check if the roi is not empty, if it is empty, remove the tract as well
+            tmproi = niftiread(rpath);
+            if sum(tmproi(:))==0
+                warning('ROI %s is required, exists, but it is empty, the lines containing this ROI will be removed',rpath);
+                emptyOrNoROIs = [emptyOrNoROIs; rname];
+            end
+        end
 	end
 end
+
+
+% Delete from A those ROIs that are not there or are empty
+for nr=1:length(emptyOrNoROIs)
+    delThis = emptyOrNoROIs(nr);
+    delThis = strrep(delThis,'.nii.gz','');
+    roisIndices = 1:2:12;
+    varNames = A.Properties.VariableNames;
+    for nri=1:roisIndices
+        roin             = varNames{nri};
+        delThisRows      = strcmp(A.(roin),delThis);
+        A(delThisRows,:) = [];
+    end
+    
+end
+
+
+
+
+
+
+
+
 % Create the ROIs by concatenating. Use Matlab for now
 for nt=1:length(createROInew)
 	nroi = fullfile(J.params.roi_dir,createROInew(nt));
@@ -413,6 +478,11 @@ for nt=1:length(createROInew)
 		niftiWrite(nR);
 	end
 end
+
+
+
+
+
 
 % Dilate those ROIs that require it using mrtrix's tool maskfilter
 % maskfilter input filter(dilate) output

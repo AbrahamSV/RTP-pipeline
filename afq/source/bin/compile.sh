@@ -2,16 +2,16 @@
 
 cat > build.m <<END
 
-addpath(genpath('/bcbl/home/home_g-m/llecca/RTP-pipeline'));
-rmpath(genpath('/bcbl/home/home_g-m/llecca/RTP-pipeline/local'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/GIT/RTP-pipeline'));
+rmpath(genpath('/bcbl/home/home_g-m/glerma/GIT/RTP-pipeline/local'));
 
-addpath(genpath('/bcbl/home/home_g-m/llecca/toolboxes/jsonlab'));
-addpath(genpath('/bcbl/home/home_g-m/llecca/toolboxes/JSONio'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/toolboxes/jsonlab'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/toolboxes/JSONio'));
 
-addpath(genpath('/bcbl/home/home_g-m/llecca/brain-life/encode'));
-addpath(genpath('/bcbl/home/home_g-m/llecca/brain-life/app-life'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/GIT/brain-life/encode'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/GIT/brain-life/app-life'));
 
-addpath(genpath('/bcbl/home/home_g-m/llecca/toolboxes/freesurfer_mrtrix_afni_matlab_tools'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/toolboxes/freesurfer_mrtrix_afni_matlab_tools'));
 
 
 mcc -m -R -nodisplay -a /bcbl/home/home_g-m/llecca/RTP-pipeline/afq/includeFiles -a /bcbl/home/home_g-m/llecca/brain-life/encode/mexfiles  -d compiled RTP.m

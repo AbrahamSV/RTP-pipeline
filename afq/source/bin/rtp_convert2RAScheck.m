@@ -3,6 +3,7 @@ function [convert2RAS,dsline] = rtp_convert2RAScheck(fname)
 %   Detailed explanation goes here
 
 % fname = '/Users/glerma/soft/rtp-pipeline/local/DTIINIT/input/T1w.nii.gz';
+% fname = '/export/home/glerma/TESTDATA/DWIpipeline/Nifti/derivatives/rtp-pipeline_4.3.9/analysis-01/sub-S005/ses-T01/output/RTP/t1.nii.gz';
 
     convert2RAS     = false;
     [status,result] = AFQ_mrtrix_cmd(sprintf('mrinfo %s',fname));
