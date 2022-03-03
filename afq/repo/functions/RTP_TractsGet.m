@@ -441,14 +441,27 @@ for nt=1:height(tracts)
                 % Create the SF-s for both the clipped and non-clipped versions
                 fg_clean_SF = fg_clean;
                 fg_C2ROI_SF = fg_C2ROI;
-                % Change the fiber by the superfiber
-                SuperFiber = dtiComputeSuperFiberRepresentation(fg_clean_SF,[],100);
-                fg_clean_SF.fibers= SuperFiber.fibers;
-                SuperFiber = dtiComputeSuperFiberRepresentation(fg_C2ROI_SF,[],100);
-                fg_C2ROI_SF.fibers= SuperFiber.fibers;
-                % Write both super fibers
-                AFQ_fgWrite(fg_clean_SF(nt), ts.cfpath_SF,'tck');
-                AFQ_fgWrite(fg_C2ROI_SF(nt), ts.c2roipath_SF,'tck');
+                SuperFiber_clean = dtiComputeSuperFiberRepresentation(fg_clean_SF,[],100);
+                SuperFiber_C2ROI = dtiComputeSuperFiberRepresentation(fg_C2ROI_SF,[],100);
+                % Change the fiber by the superfiber if it was calculated
+                % properly
+                if isfield(SuperFiber_clean,'fibers')
+                    fg_clean_SF.fibers= SuperFiber_clean.fibers;
+                    % Write super fibers
+                    AFQ_fgWrite(fg_clean_SF(nt), ts.cfpath_SF,'tck');
+                else
+                    fprintf('[RTP_TractsGet] Empty tract: No Clipping or obtaining SF for %s ...\n', ts.label)
+                    fg_clean_SF = fg_clean;    
+                end
+                if isfield(SuperFiber_C2ROI,'fibers')
+                    fg_C2ROI_SF.fibers= SuperFiber_C2ROI.fibers;
+                    % Write super fiber
+                    AFQ_fgWrite(fg_C2ROI_SF(nt), ts.c2roipath_SF,'tck');
+                else
+                    fprintf('[RTP_TractsGet] Empty tract: No Clipping or obtaining SF for %s ...\n', ts.label)
+                    fg_C2ROI    = fg_clean;
+                    fg_C2ROI_SF = fg_clean;    
+                end
             else
                 fprintf('[RTP_TractsGet] Empty tract: No Clipping or obtaining SF for %s ...\n', ts.label)
                 fg_C2ROI    = fg_clean;
