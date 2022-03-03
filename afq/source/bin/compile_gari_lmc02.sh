@@ -2,18 +2,15 @@
 
 cat > build.m <<END
 
-addpath(genpath('/bcbl/home/home_g-m/glerma/GIT/RTP-pipeline'));
-rmpath(genpath('/bcbl/home/home_g-m/glerma/GIT/RTP-pipeline/local'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/soft/RTP-pipeline'));
+rmpath(genpath('/bcbl/home/home_g-m/glerma/soft/RTP-pipeline/local'));
 
-% addpath(genpath('/data/localhome/glerma/toolboxes/jsonlab'));
-% addpath(genpath('/data/localhome/glerma/toolboxes/JSONio'));
-
-addpath(genpath('/bcbl/home/home_g-m/glerma/GIT/encode'));
-addpath(genpath('/bcbl/home/home_g-m/glerma/GIT/app-life'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/soft/encode'));
+addpath(genpath('/bcbl/home/home_g-m/glerma/soft/app-life'));
 
 addpath(genpath('/bcbl/home/home_g-m/glerma/toolboxes/freesurfer_mrtrix_afni_matlab_tools'));
 
-mcc -m -R -nodisplay -a /bcbl/home/home_g-m/glerma/GIT/RTP-pipeline/afq/includeFiles -a /bcbl/home/home_g-m/glerma/GIT/encode -d compiled RTP.m
+mcc -m -R -nodisplay -a /bcbl/home/home_g-m/glerma/soft/RTP-pipeline/afq/includeFiles -a /bcbl/home/home_g-m/glerma/soft/encode -d compiled RTP.m
 
 exit
 END
