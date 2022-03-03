@@ -135,7 +135,7 @@ else
   cp $RTP_DIR/mrtrix/*clean*.tck $OUTPUT_DIR
   cp $RTP_DIR/afq*.mat $OUTPUT_DIR
   
-  zip -r $OUTPUT_DIR/fs.zip $RTP_DIR/fs
+  zip -r -qq $OUTPUT_DIR/fs.zip $RTP_DIR/fs
 
   # Get basename for RTP ouput zip
   # RTP_NAME=$(basename `find $RTP_DIR/ -type f -name "afq_20*.mat"` RTP_ZIP  )
@@ -148,7 +148,7 @@ else
   chmod -R 777 $OUTPUT_DIR
   echo -e "$CONTAINER  compressing outputs..."
   if [ "$save_output" ==  "true" ]; then
-        zip -r $RTP_NAME.zip $RTP_NAME 
+        zip -r -qq $RTP_NAME.zip $RTP_NAME 
   fi
   #zip -r $RTP_NAME.zip $RTP_NAME 
   
