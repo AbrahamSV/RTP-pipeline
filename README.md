@@ -21,3 +21,6 @@ The documentation is in the wiki:
 * [Parameter recommendations](https://github.com/vistalab/RTP-pipeline/wiki/Parameter-recommendations): differences in acquisition sequences or subject populations require to use different parameters, in this page we collect the parameters and pipeline versions we used for better results. 
 * [Reporting and citation](reporting-citation) In this wiki page we include examples of how to report and cite RTP and all the included tools, it will change depending on the selected tools. 
 * [TO-DO list](https://github.com/vistalab/RTP-pipeline/wiki/TO-DO)
+
+
+theme:minima 
